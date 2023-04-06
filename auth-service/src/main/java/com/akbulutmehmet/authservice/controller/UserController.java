@@ -1,6 +1,7 @@
 package com.akbulutmehmet.authservice.controller;
 
 import com.akbulutmehmet.authservice.dto.request.CreateUserRequest;
+import com.akbulutmehmet.authservice.dto.request.LoginRequest;
 import com.akbulutmehmet.authservice.dto.response.UserDto;
 import com.akbulutmehmet.authservice.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ public class UserController {
     @PostMapping(value = "userRegister")
     public ResponseEntity<UserDto> userRegister(@Valid @RequestBody CreateUserRequest createUserRequest) {
         return ResponseEntity.ok(userService.userRegister(createUserRequest));
+    }
+
+    @PostMapping(value = "userLogin")
+    public ResponseEntity<String> userLoginWithEmailAndPassword(@Valid @RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.userLoginWithEmailAndPassword(loginRequest));
     }
 
 }
