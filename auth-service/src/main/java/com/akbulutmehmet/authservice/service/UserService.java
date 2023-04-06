@@ -33,8 +33,9 @@ public class UserService {
     }
 
     public String userLoginWithEmailAndPassword(LoginRequest loginRequest) {
-        User user = userRepository.findByEmailAndPassword(loginRequest.getEmail(),loginRequest.getPassword());
-        if(!user.equals(null)){
+        Optional<User> user = Optional.ofNullable(userRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword()).
+                orElseThrow(() -> new UserException("User not found!")));
+        if (user != null) {
             return "ok";
         }
         return "fail";

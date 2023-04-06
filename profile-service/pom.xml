@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.akbulutmehmet</groupId>
     <artifactId>profile-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>profile-service</name>
     <description>profile-service</description>
     <properties>

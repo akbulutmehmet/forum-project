@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.akbulutmehmet</groupId>
     <artifactId>web-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>web-service</name>
     <description>web-service</description>
     <properties>
