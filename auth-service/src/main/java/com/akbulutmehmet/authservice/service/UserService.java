@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED,readOnly = true)
+@Transactional(propagation = Propagation.REQUIRED,readOnly = true,rollbackFor = UserException.class)
 public class UserService {
     private final UserRepository userRepository;
 
