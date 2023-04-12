@@ -8,7 +8,7 @@ import com.akbulutmehmet.authservice.manager.IProfileManager;
 import com.akbulutmehmet.authservice.mapper.IUserMapper;
 import com.akbulutmehmet.authservice.model.User;
 import com.akbulutmehmet.authservice.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class UserService {
     private final IUserMapper userMapper;
     private final IProfileManager profileManager;
 
-    public UserService(UserRepository userRepository, IUserMapper userMapper, IProfileManager profileManager) {
+    public UserService(UserRepository userRepository,IUserMapper userMapper, IProfileManager profileManager) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.profileManager = profileManager;
