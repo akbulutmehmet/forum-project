@@ -6,7 +6,6 @@ import com.akbulutmehmet.webservice.model.Comment;
 import com.akbulutmehmet.webservice.model.Post;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
