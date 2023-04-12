@@ -20,20 +20,20 @@ public class User implements Serializable {
     private String name;
     @Column(name = "surname",nullable = false)
     private String surName;
-    @Column(name = "email",nullable = false,unique = true)
-    private String email;
+    @Column(name = "username",nullable = false,unique = true)
+    private String username;
     @Column(name = "password",nullable = false)
     private String password;
 
-    public User(String id, String name, String surName, String email, String password) {
+    public User() {
+    }
+
+    public User(String id, String name, String surName, String username, String password) {
         this.id = id;
         this.name = name;
         this.surName = surName;
-        this.email = email;
+        this.username = username;
         this.password = password;
-    }
-
-    public User() {
     }
 
     public String getId() {
@@ -60,12 +60,12 @@ public class User implements Serializable {
         this.surName = surName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

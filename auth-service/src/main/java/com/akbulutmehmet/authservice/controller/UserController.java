@@ -22,12 +22,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "userRegister")
+    @PostMapping(value = "/userRegister")
     public ResponseEntity<UserDto> userRegister(@Valid @RequestBody CreateUserRequest createUserRequest) {
         return ResponseEntity.ok(userService.userRegister(createUserRequest));
     }
 
-    @PostMapping(value = "userLogin")
+    @PostMapping(value = "/userLogin")
     public ResponseEntity<String> userLoginWithEmailAndPassword(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.userLoginWithEmailAndPassword(loginRequest));
     }

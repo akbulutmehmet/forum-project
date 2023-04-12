@@ -14,20 +14,19 @@ public class CreateUserRequest implements Serializable {
     private String surName;
     @NotBlank(message = "Email field should not be blank")
     @NotEmpty(message = "Email field should not be empty")
-    @Email
-    private String email;
+    private String username;
     @NotBlank(message = "Password field should not be blank")
     @NotEmpty(message = "Password field should not be empty")
     private String password;
 
-    public CreateUserRequest(String name, String surName, String email, String password) {
-        this.name = name;
-        this.surName = surName;
-        this.email = email;
-        this.password = password;
+    public CreateUserRequest() {
     }
 
-    public CreateUserRequest() {
+    public CreateUserRequest(String name, String surName, String username, String password) {
+        this.name = name;
+        this.surName = surName;
+        this.username = username;
+        this.password = password;
     }
 
     public String getName() {
@@ -46,12 +45,12 @@ public class CreateUserRequest implements Serializable {
         this.surName = surName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
