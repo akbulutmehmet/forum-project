@@ -3,11 +3,10 @@ package com.akbulutmehmet.authservice.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -15,6 +14,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "user_id")
     private String id;
     @Column(name = "name",nullable = false)
     private String name;
@@ -25,6 +25,12 @@ public class User implements Serializable {
     @Column(name = "password",nullable = false)
     private String password;
 
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "role_id")})
+    private List<Role> roles;
+
     public User() {
     }
 
@@ -34,6 +40,14 @@ public class User implements Serializable {
         this.surName = surName;
         this.username = username;
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getId() {

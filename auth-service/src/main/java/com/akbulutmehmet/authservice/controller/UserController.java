@@ -5,12 +5,10 @@ import com.akbulutmehmet.authservice.dto.request.LoginRequest;
 import com.akbulutmehmet.authservice.dto.response.UserDto;
 import com.akbulutmehmet.authservice.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/user")
@@ -22,14 +20,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/userRegister")
+    @PostMapping(value = "/register")
     public ResponseEntity<UserDto> userRegister(@Valid @RequestBody CreateUserRequest createUserRequest) {
         return ResponseEntity.ok(userService.userRegister(createUserRequest));
     }
 
-    @PostMapping(value = "/userLogin")
+    @PostMapping(value = "/login")
     public ResponseEntity<String> userLoginWithEmailAndPassword(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.userLoginWithEmailAndPassword(loginRequest));
     }
 
+    @GetMapping(value = "/listusers")
+    public ResponseEntity<List<UserDto>> getUsers () {
+        return ResponseEntity.ok(userService.listUsers());
+    }
 }
