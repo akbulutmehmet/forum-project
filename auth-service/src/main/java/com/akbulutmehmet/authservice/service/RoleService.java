@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(propagation = Propagation.REQUIRED,readOnly = true)
 public class RoleService {
@@ -17,9 +19,14 @@ public class RoleService {
     }
 
     @Transactional(readOnly = false)
-    public Role createRole (Role role) {
+    public Role saveRole (Role role) {
         return roleRepository.save(role);
     }
+    @Transactional(readOnly = false)
+    public List<Role> saveRoles(List<Role> roleList) {
+        return roleRepository.saveAll(roleList);
+    }
+
     public Role findByRoleName(String roleName) {
         return roleRepository.findByRoleName(roleName);
     }

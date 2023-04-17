@@ -1,11 +1,14 @@
 package com.akbulutmehmet.authservice.config;
 
 import com.akbulutmehmet.authservice.service.UserDetailServiceImp;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -28,9 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       http.authorizeRequests().antMatchers("/api/v1/user/listusers").hasRole("USER");
    }
 
+   @Bean
+   public BCryptPasswordEncoder bCryptPasswordEncoder() {
+      return new BCryptPasswordEncoder();
+   }
 
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      auth.userDetailsService(userDetailServiceImp);
+      auth.userDetailsService(userDetailServiceImp).passwordEncoder(bCryptPasswordEncoder());
    }
 }

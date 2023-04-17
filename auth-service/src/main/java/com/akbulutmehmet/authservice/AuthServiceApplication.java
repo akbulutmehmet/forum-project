@@ -10,6 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class AuthServiceApplication implements ApplicationRunner {
     private final UserService userService;
@@ -27,6 +30,9 @@ public class AuthServiceApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        Role roleUser = new Role(1L,"ROLE_USER");
+        Role roleAdmin = new Role(2L,"ROLE_ADMIN");
+        roleService.saveRoles(List.of(roleUser,roleAdmin));
 
     }
 }

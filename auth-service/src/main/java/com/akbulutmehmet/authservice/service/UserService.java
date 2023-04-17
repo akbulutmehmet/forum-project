@@ -9,6 +9,8 @@ import com.akbulutmehmet.authservice.manager.IProfileManager;
 import com.akbulutmehmet.authservice.model.Role;
 import com.akbulutmehmet.authservice.model.User;
 import com.akbulutmehmet.authservice.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +24,15 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.REQUIRED,readOnly = true,rollbackFor = UserException.class)
 public class UserService {
     private final UserRepository userRepository;
-
     private final IProfileManager profileManager;
-
     private final UserDtoConverter userDtoConverter;
-
     private final RoleService roleService;
+    private  PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public UserService(UserRepository userRepository, IProfileManager profileManager, UserDtoConverter userDtoConverter, RoleService roleService) {
         this.userRepository = userRepository;
@@ -36,13 +41,14 @@ public class UserService {
         this.roleService = roleService;
     }
 
+
     @Transactional(readOnly = false)
     public UserDto userRegister(CreateUserRequest createUserRequest) {
         User user = new User();
         user.setName(createUserRequest.getName());
         user.setSurName(createUserRequest.getSurName());
         user.setUsername(createUserRequest.getUsername());
-        user.setPassword(createUserRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.findByRoleName("ROLE_USER"));
         user.setRoles(roles);
