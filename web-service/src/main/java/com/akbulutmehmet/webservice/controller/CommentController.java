@@ -23,4 +23,5 @@ public class CommentController {
     public ResponseEntity<CommentDto> createComment (@Valid @RequestBody CreateCommentRequest createCommentRequest){
         return ResponseEntity.ok(commentService.createComment(createCommentRequest));
     }
+
 }

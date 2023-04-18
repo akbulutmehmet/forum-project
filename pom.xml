@@ -13,6 +13,13 @@
     <version>1.0</version>
     <name>forum-project</name>
     <description>forum-project</description>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Mehmet Akbulut</name>
+            <url>https://akbulutmehmet.com</url>
+        </developer>
+    </developers>
     <properties>
         <java.version>11</java.version>
     </properties>

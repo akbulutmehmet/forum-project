@@ -9,7 +9,7 @@ import com.akbulutmehmet.authservice.manager.IProfileManager;
 import com.akbulutmehmet.authservice.model.Role;
 import com.akbulutmehmet.authservice.model.User;
 import com.akbulutmehmet.authservice.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,14 +27,14 @@ public class UserService {
     private final IProfileManager profileManager;
     private final UserDtoConverter userDtoConverter;
     private final RoleService roleService;
-    private  PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
-    public UserService(UserRepository userRepository, IProfileManager profileManager, UserDtoConverter userDtoConverter, RoleService roleService) {
+    public UserService(UserRepository userRepository,
+                       IProfileManager profileManager,
+                       UserDtoConverter userDtoConverter,
+                       RoleService roleService
+    ) {
         this.userRepository = userRepository;
         this.profileManager = profileManager;
         this.userDtoConverter = userDtoConverter;
