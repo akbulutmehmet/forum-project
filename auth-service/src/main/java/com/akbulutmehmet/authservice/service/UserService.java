@@ -3,6 +3,7 @@ package com.akbulutmehmet.authservice.service;
 import com.akbulutmehmet.authservice.dto.converter.UserDtoConverter;
 import com.akbulutmehmet.authservice.dto.request.CreateUserRequest;
 import com.akbulutmehmet.authservice.dto.request.LoginRequest;
+import com.akbulutmehmet.authservice.dto.request.TokenRequest;
 import com.akbulutmehmet.authservice.dto.response.TokenDto;
 import com.akbulutmehmet.authservice.dto.response.UserDto;
 import com.akbulutmehmet.authservice.exception.UserException;
@@ -64,5 +65,19 @@ public class UserService {
     }
     public List<UserDto> listUser () {
         return userRepository.findAll().stream().map((user) -> userDtoConverter.convert(user)).collect(Collectors.toList());
+    }
+
+    public Boolean tokenControl(TokenRequest tokenRequest) {
+        String username = null;
+        try{
+            username = jwtService.findUsername(tokenRequest.getToken());
+            User user = userRepository.
+                    findByUsername(username).
+                    orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+            return jwtService.tokenControl(tokenRequest.getToken(),user);
+        }catch (Exception exception){
+            exception.getMessage();
+        }
+        return false;
     }
 }

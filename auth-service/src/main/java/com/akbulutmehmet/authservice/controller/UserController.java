@@ -2,6 +2,7 @@ package com.akbulutmehmet.authservice.controller;
 
 import com.akbulutmehmet.authservice.dto.request.CreateUserRequest;
 import com.akbulutmehmet.authservice.dto.request.LoginRequest;
+import com.akbulutmehmet.authservice.dto.request.TokenRequest;
 import com.akbulutmehmet.authservice.dto.response.TokenDto;
 import com.akbulutmehmet.authservice.dto.response.UserDto;
 import com.akbulutmehmet.authservice.service.UserService;
@@ -35,5 +36,10 @@ public class UserController {
     @GetMapping(value = "listuser")
     public ResponseEntity<List<UserDto>> listUsers () {
         return ResponseEntity.ok(userService.listUser());
+    }
+
+    @PostMapping(value = "/tokenControl")
+    public ResponseEntity<Boolean> tokenControl (@Valid @RequestBody TokenRequest tokenRequest) {
+        return ResponseEntity.ok(userService.tokenControl(tokenRequest));
     }
 }

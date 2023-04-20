@@ -19,6 +19,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "post_id")
     private Post post;
 
+
     public Comment() {
     }
 
