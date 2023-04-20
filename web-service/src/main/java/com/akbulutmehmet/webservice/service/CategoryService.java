@@ -41,4 +41,8 @@ public class CategoryService {
     public Category findById(String categoryId) {
         return categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryException("Category not found"));
     }
+
+    public CategoryDto getCategoryWithId(String id) {
+        return categoryDtoConverter.convert(findById(id));
+    }
 }

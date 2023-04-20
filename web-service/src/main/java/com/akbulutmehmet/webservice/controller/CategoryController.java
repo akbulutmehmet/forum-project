@@ -26,4 +26,15 @@ public class CategoryController {
     public ResponseEntity<Set<CategoryDto>> listCategory(){
         return ResponseEntity.ok(categoryService.listCategory());
     }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryDto> getCategoryWithId (@PathVariable("id") String id){
+        return ResponseEntity.ok(categoryService.getCategoryWithId(id));
+    }
+
+
+    @PostMapping(value = "/updateCategory/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest,
+                                                      @PathVariable("id") String id) {
+        return null;
+    }
 }
