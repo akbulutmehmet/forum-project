@@ -1,7 +1,5 @@
 package com.akbulutmehmet.authservice.dto.response;
 
-import com.akbulutmehmet.authservice.model.Role;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,26 +8,19 @@ public class UserDto implements Serializable {
     private String name;
     private String surName;
     private String username;
-    private List<Role> roles;
+
 
     public UserDto() {
     }
 
-    public UserDto(String id, String name, String surName, String username, List<Role> roles) {
+    public UserDto(String id, String name, String surName, String username) {
         this.id = id;
         this.name = name;
         this.surName = surName;
         this.username = username;
-        this.roles = roles;
+
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
     public String getId() {
         return id;

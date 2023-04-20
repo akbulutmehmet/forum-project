@@ -3,12 +3,16 @@ package com.akbulutmehmet.authservice.service;
 import com.akbulutmehmet.authservice.dto.converter.UserDtoConverter;
 import com.akbulutmehmet.authservice.dto.request.CreateUserRequest;
 import com.akbulutmehmet.authservice.dto.request.LoginRequest;
+import com.akbulutmehmet.authservice.dto.response.TokenDto;
 import com.akbulutmehmet.authservice.dto.response.UserDto;
 import com.akbulutmehmet.authservice.exception.UserException;
 import com.akbulutmehmet.authservice.manager.IProfileManager;
 import com.akbulutmehmet.authservice.model.Role;
 import com.akbulutmehmet.authservice.model.User;
 import com.akbulutmehmet.authservice.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,51 +28,41 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.REQUIRED,readOnly = true,rollbackFor = UserException.class)
 public class UserService {
     private final UserRepository userRepository;
-    private final IProfileManager profileManager;
     private final UserDtoConverter userDtoConverter;
-    private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-
-    public UserService(UserRepository userRepository,
-                       IProfileManager profileManager,
-                       UserDtoConverter userDtoConverter,
-                       RoleService roleService
-    ) {
+    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.profileManager = profileManager;
         this.userDtoConverter = userDtoConverter;
-        this.roleService = roleService;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
-
     @Transactional(readOnly = false)
-    public UserDto userRegister(CreateUserRequest createUserRequest) {
+    public TokenDto userRegister(CreateUserRequest createUserRequest) {
         User user = new User();
         user.setName(createUserRequest.getName());
         user.setSurName(createUserRequest.getSurName());
         user.setUsername(createUserRequest.getUsername());
         user.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.findByRoleName("ROLE_USER"));
-        user.setRoles(roles);
-        return userDtoConverter.convert(userRepository.save(user));
+        user.setRole(Role.USER);
+        userRepository.save(user);
+        return new TokenDto(jwtService.generateToken(user));
     }
 
-    public String userLoginWithEmailAndPassword(LoginRequest loginRequest) {
-        Optional<User> user = Optional.ofNullable(userRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword()).
-                orElseThrow(() -> new UserException("User not found!")));
-        if (user != null) {
-            return "ok";
-        }
-        return "fail";
+    public TokenDto userLogin(LoginRequest loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),loginRequest.getPassword()));
+        User user = userRepository.
+                findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        return new TokenDto(jwtService.generateToken(user));
     }
-
-    public User loadUserByUsername (String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public List<UserDto> listUsers() {
-      return  userRepository.findAll().stream().map(user -> userDtoConverter.convert(user)).collect(Collectors.toList());
+    public List<UserDto> listUser () {
+        return userRepository.findAll().stream().map((user) -> userDtoConverter.convert(user)).collect(Collectors.toList());
     }
 }

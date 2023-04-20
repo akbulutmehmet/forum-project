@@ -1,44 +1,46 @@
 package com.akbulutmehmet.authservice.config;
 
-import com.akbulutmehmet.authservice.service.UserDetailServiceImp;
+import com.akbulutmehmet.authservice.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig  {
 
-   private final UserDetailServiceImp userDetailServiceImp;
+    private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-   public SecurityConfig(UserDetailServiceImp userDetailServiceImp) {
-      this.userDetailServiceImp = userDetailServiceImp;
-   }
+    public SecurityConfig(AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.authenticationProvider = authenticationProvider;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
-   @Override
-   protected void configure(HttpSecurity http) throws Exception {
-      http.csrf().disable();
-      http.httpBasic();
-      http.formLogin().disable();
-      http.authorizeRequests().antMatchers("api/v1/user/login").permitAll().
-              and().authorizeRequests().antMatchers("/api/v1/user/register").permitAll();
-      http.authorizeRequests().antMatchers("/api/v1/user/listusers").hasRole("USER");
-   }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .antMatchers("/api/v1/user/login","/api/v1/user/register")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-   @Bean
-   public BCryptPasswordEncoder bCryptPasswordEncoder() {
-      return new BCryptPasswordEncoder();
-   }
+        return httpSecurity.build();
+    }
 
-   @Override
-   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      auth.userDetailsService(userDetailServiceImp).passwordEncoder(bCryptPasswordEncoder());
-   }
 }

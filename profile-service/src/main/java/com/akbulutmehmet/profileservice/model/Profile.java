@@ -16,8 +16,8 @@ public class Profile implements Serializable {
     private String id;
     @Column(name = "name")
     private String name;
-    @Column(name = "name")
-    private String surName;
+    @Column(name = "surname")
+    private String surname;
     @Column(name = "city")
     private String city;
     @Column(name = "country")
@@ -26,10 +26,10 @@ public class Profile implements Serializable {
     public Profile() {
     }
 
-    public Profile(String id, String name, String surName, String city, String country) {
+    public Profile(String id, String name, String surname, String city, String country) {
         this.id = id;
         this.name = name;
-        this.surName = surName;
+        this.surname = surname;
         this.city = city;
         this.country = country;
     }
@@ -50,12 +50,12 @@ public class Profile implements Serializable {
         this.name = name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getCity() {
