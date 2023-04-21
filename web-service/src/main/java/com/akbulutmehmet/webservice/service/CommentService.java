@@ -2,7 +2,9 @@ package com.akbulutmehmet.webservice.service;
 
 import com.akbulutmehmet.webservice.dto.converter.CommentDtoConverter;
 import com.akbulutmehmet.webservice.dto.request.CreateCommentRequest;
+import com.akbulutmehmet.webservice.dto.request.UpdateCommentRequest;
 import com.akbulutmehmet.webservice.dto.response.CommentDto;
+import com.akbulutmehmet.webservice.exception.CommentException;
 import com.akbulutmehmet.webservice.model.Comment;
 import com.akbulutmehmet.webservice.model.Post;
 import com.akbulutmehmet.webservice.repository.CommentRepository;
@@ -30,5 +32,19 @@ public class CommentService {
         comment.setContent(createCommentRequest.getContent());
         comment.setPost(post);
         return commentDtoConverter.convert(commentRepository.save(comment));
+    }
+
+    public Comment findById(String id) {
+        return commentRepository.findById(id).orElseThrow(() -> new CommentException("Comment not found!"));
+    }
+    @Transactional(readOnly = false)
+    public CommentDto updateComment(UpdateCommentRequest updateCommentRequest) {
+        Comment comment = findById(updateCommentRequest.getId());
+        comment.setContent(updateCommentRequest.getContent());
+        return commentDtoConverter.convert(commentRepository.save(comment));
+    }
+    @Transactional(readOnly = false)
+    public void deleteComment(String id) {
+        commentRepository.deleteById(id);
     }
 }

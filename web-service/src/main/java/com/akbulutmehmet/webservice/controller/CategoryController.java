@@ -1,6 +1,7 @@
 package com.akbulutmehmet.webservice.controller;
 
 import com.akbulutmehmet.webservice.dto.request.CreateCategoryRequest;
+import com.akbulutmehmet.webservice.dto.request.UpdateCategoryRequest;
 import com.akbulutmehmet.webservice.dto.response.CategoryDto;
 import com.akbulutmehmet.webservice.model.Category;
 import com.akbulutmehmet.webservice.service.CategoryService;
@@ -30,11 +31,8 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getCategoryWithId (@PathVariable("id") String id){
         return ResponseEntity.ok(categoryService.getCategoryWithId(id));
     }
-
-
-    @PostMapping(value = "/updateCategory/{id}")
-    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest,
-                                                      @PathVariable("id") String id) {
-        return null;
+    @PostMapping(value = "/updateCategory")
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+        return ResponseEntity.ok(categoryService.updateCategory(updateCategoryRequest));
     }
 }

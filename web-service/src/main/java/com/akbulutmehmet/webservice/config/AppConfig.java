@@ -7,11 +7,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-
 public class AppConfig implements WebMvcConfigurer {
     private final AuthInterceptor authInterceptor;
 
-    public AppConfig(@Lazy  AuthInterceptor authInterceptor) {
+    @Lazy
+    public AppConfig(AuthInterceptor authInterceptor) {
         this.authInterceptor = authInterceptor;
     }
 

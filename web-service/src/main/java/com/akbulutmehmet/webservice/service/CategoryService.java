@@ -3,6 +3,7 @@ package com.akbulutmehmet.webservice.service;
 
 import com.akbulutmehmet.webservice.dto.converter.CategoryDtoConverter;
 import com.akbulutmehmet.webservice.dto.request.CreateCategoryRequest;
+import com.akbulutmehmet.webservice.dto.request.UpdateCategoryRequest;
 import com.akbulutmehmet.webservice.dto.response.CategoryDto;
 import com.akbulutmehmet.webservice.exception.CategoryException;
 import com.akbulutmehmet.webservice.model.Category;
@@ -44,5 +45,12 @@ public class CategoryService {
 
     public CategoryDto getCategoryWithId(String id) {
         return categoryDtoConverter.convert(findById(id));
+    }
+    @Transactional(readOnly = false)
+    public CategoryDto updateCategory(UpdateCategoryRequest updateCategoryRequest) {
+        Category category = findById(updateCategoryRequest.getId());
+        category.setTitle(updateCategoryRequest.getTitle());
+        category.setDescription(updateCategoryRequest.getDescription());
+        return categoryDtoConverter.convert(categoryRepository.save(category));
     }
 }

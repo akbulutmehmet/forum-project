@@ -27,7 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         token = token.substring(7);
         Boolean tokenControl = authManager.tokenControl(new TokenRequest(token));
         if(!tokenControl) {
-            throw  new AuthorizationException("UnAuthorizaton ");
+            throw  new AuthorizationException("UnAuthorization request");
         }
         return tokenControl;
     }
