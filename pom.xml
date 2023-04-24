@@ -22,6 +22,7 @@
     </developers>
     <properties>
         <java.version>11</java.version>
+        <swagger.version>3.0.0</swagger.version>
     </properties>
     <packaging>pom</packaging>
     <modules>
@@ -65,17 +66,17 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
     <build>
