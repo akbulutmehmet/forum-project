@@ -1,6 +1,7 @@
 package com.akbulutmehmet.webservice.config;
 
 import com.akbulutmehmet.webservice.interceptor.AuthInterceptor;
+import com.akbulutmehmet.webservice.manager.IAuthManager;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -8,7 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
+
     private final AuthInterceptor authInterceptor;
+
 
     @Lazy
     public AppConfig(AuthInterceptor authInterceptor) {
@@ -17,6 +20,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
     }
 }
