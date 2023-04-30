@@ -1,6 +1,7 @@
-const PostaxiosWithAuth = (url,data) => {
+import axios from "axios";
+const Getaxios = (url) => {
     return new Promise((resolve,reject) => {
-        axios.post(url,data,{headers:{
+        axios.get(url,{headers:{
             'Content-Type':'application/json',
             'Authorization':'Bearer ' + sessionStorage.getItem("token")
         }}).then( 
@@ -8,3 +9,5 @@ const PostaxiosWithAuth = (url,data) => {
         ).catch((error) => reject(error));
     });
 }
+
+export default Getaxios;
