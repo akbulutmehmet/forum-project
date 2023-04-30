@@ -1,13 +1,15 @@
 package com.akbulutmehmet.webservice.config;
 
 import com.akbulutmehmet.webservice.interceptor.AuthInterceptor;
-import com.akbulutmehmet.webservice.manager.IAuthManager;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableWebMvc
 public class AppConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
@@ -21,5 +23,10 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
     }
 }
