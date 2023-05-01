@@ -18,7 +18,7 @@ const Login = () => {
         })
     }
     const btnOnClick = () => {
-        loginService.login("http://localhost:8081/api/v1/user/login",JSON.stringify(user),(response) => {
+        loginService.login("/api1/api/v1/user/login",JSON.stringify(user),(response) => {
             sessionStorage.setItem("token",response.data.token); 
             setTimeout(() => {
                 window.location.href = "/"

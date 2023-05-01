@@ -4,7 +4,7 @@ const Getaxios = (url) => {
         axios.get(url,{headers:{
             'Content-Type':'application/json',
             'Authorization':'Bearer ' + sessionStorage.getItem("token")
-        }}).then( 
+        }}).then(   
             (response) => resolve(response)
         ).catch((error) => reject(error));
     });

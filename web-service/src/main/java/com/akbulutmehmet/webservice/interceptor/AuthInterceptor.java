@@ -22,13 +22,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization");
         if (token == null || token.equals("")) {
-            throw  new AuthorizationException("UnAuthorizaton ");
+            throw  new AuthorizationException("UnAuthorization request ");
         }
         token = token.substring(7);
         Boolean tokenControl = authManager.tokenControl(new TokenRequest(token));
         if(!tokenControl) {
             throw  new AuthorizationException("UnAuthorization request");
         }
-        return tokenControl;
+        return HandlerInterceptor.super.preHandle(request,response,handler);
     }
 }

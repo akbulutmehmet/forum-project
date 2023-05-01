@@ -28,7 +28,7 @@ const Register = () => {
         })
     }
     const btnOnClick = () => {
-        loginService.register("http://localhost:8081/api/v1/user/register",JSON.stringify(user),(res) => {
+        loginService.register("/api1/api/v1/user/register",JSON.stringify(user),(res) => {
             sessionStorage.setItem("token",res.data.token);
             setTimeout(() => {
                 window.location.href = "/"

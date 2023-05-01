@@ -13,6 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/v1/category")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class CategoryController {
     private final CategoryService categoryService;
 

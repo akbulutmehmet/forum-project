@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/user")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class UserController {
 
     private final UserService userService;
