@@ -3,6 +3,8 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login"
 import Register from "./pages/register"
 import Categories from "./pages/categories";
+import NewCategory from "./pages/new-category";
+import CategoryDetail from "./components/categoryDetail";
 function App() {
   
   return (
@@ -13,6 +15,8 @@ function App() {
       <Route path="/" element={sessionStorage.getItem("token") == null || sessionStorage.getItem("token") ==="" ?<Login />  : <Dashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/categories" element={<Categories />} />
+      <Route path="/new-category" element={<NewCategory />} />
+      <Route path="/category/:categoryId" element={<CategoryDetail />} />
     </Routes>
     </>
   );

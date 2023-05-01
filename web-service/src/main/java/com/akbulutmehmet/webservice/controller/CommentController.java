@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/v1/comment")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class CommentController {
     private final CommentService commentService;
 

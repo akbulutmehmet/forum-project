@@ -3,6 +3,7 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import categoryService from "../../services/CategoryService";
 import Category from "../../components/category";
+import { Link } from "react-router-dom";
 const Categories = () => {
     const [categories,setCategories] = useState([]);
     useEffect(() => {
@@ -21,8 +22,8 @@ const Categories = () => {
         <Header />
     
             <div className="container">
-                <button className="btn btn-lg btn-success m-3" >NEW CATEGORY</button>
-               {categoryList}
+                <Link to={"/new-category"} className="btn btn-lg btn-success m-3" >NEW CATEGORY</Link>
+                {categoryList}
             </div>
         <Footer />
         </>
