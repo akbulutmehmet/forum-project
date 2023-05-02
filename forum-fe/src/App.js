@@ -6,19 +6,25 @@ import Categories from "./pages/categories";
 import NewCategory from "./pages/new-category";
 import CategoryDetail from "./components/categoryDetail";
 import PostDetail from "./components/postDetail";
+import { useEffect, useState } from "react";
 function App() {
-  
+  const [isAuth,setAuth] = useState(false);
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    setAuth(!!token);
+  },[])
   return (
     <>
+    {}
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/" element={sessionStorage.getItem("token") == null || sessionStorage.getItem("token") ==="" ?<Login />  : <Dashboard />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/categories" element={<Categories />} />
-      <Route path="/new-category" element={<NewCategory />} />
-      <Route path="/category/:categoryId" element={<CategoryDetail />} />
-      <Route path="/post/:postId" element={<PostDetail />} />
+      <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
+      <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Login />} />
+      <Route path="/categories" element={isAuth ? <Categories /> : <Login />} />
+      <Route path="/new-category" element={isAuth ? <NewCategory /> : <Login />} />
+      <Route path="/category/:categoryId" element={isAuth ? <CategoryDetail /> : <Login />} />
+      <Route path="/post/:postId" element={isAuth ? <PostDetail /> : <Login />} />
     </Routes>
     </>
   );

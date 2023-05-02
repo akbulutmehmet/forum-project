@@ -1,0 +1,26 @@
+version: '3'
+services:
+  auth-db:
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: authdb
+      MYSQL_USER: authuser
+      MYSQL_PASSWORD: authpass
+    volumes:
+      - auth-db-data:/var/lib/mysql
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://auth-db:3307/authdb
+      SPRING_DATASOURCE_USERNAME: authuser
+      SPRING_DATASOURCE_PASSWORD: authpass
+    volumes:
+      - auth-service-data:/app
+volumes:
+  auth-db-data:
+  auth-service-data:

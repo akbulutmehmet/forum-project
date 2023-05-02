@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import postService from "../services/PostService";
 import Header from "./header";
 import Footer from "./footer";
-import Post from "./post";
 const PostDetail = () => {
     const {postId} = useParams();
     const [post,setPost] = useState({});
