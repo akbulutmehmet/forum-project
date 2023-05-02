@@ -5,6 +5,7 @@ import Register from "./pages/register"
 import Categories from "./pages/categories";
 import NewCategory from "./pages/new-category";
 import CategoryDetail from "./components/categoryDetail";
+import PostDetail from "./components/postDetail";
 function App() {
   
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/categories" element={<Categories />} />
       <Route path="/new-category" element={<NewCategory />} />
       <Route path="/category/:categoryId" element={<CategoryDetail />} />
+      <Route path="/post/:postId" element={<PostDetail />} />
     </Routes>
     </>
   );

@@ -30,10 +30,15 @@ public class PostService {
         Post post = new Post();
         post.setCategory(category);
         post.setContent(createPostRequest.getContent());
+        post.setTitle(createPostRequest.getTitle());
         return postDtoConverter.convert(postRepository.save(post));
     }
 
     public Post findById(String postId) {
         return postRepository.findById(postId).orElseThrow(() -> new PostException("Post not found"));
+    }
+
+    public PostDto getById (String postId) {
+        return postDtoConverter.convert(findById(postId));
     }
 }

@@ -16,7 +16,7 @@ const Categories = () => {
     const categoryList = categories.map((category,key) => {
         return <Category id={category.id} key={key} title={category.title} description={category.description} />
     })
-    
+
     return (
         <>
         <Header />

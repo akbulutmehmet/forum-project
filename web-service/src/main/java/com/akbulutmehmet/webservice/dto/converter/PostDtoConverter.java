@@ -22,6 +22,6 @@ public class PostDtoConverter {
         if(post.getCommentSet() != null) {
             commentDtoSet = post.getCommentSet().stream().map((comment) -> commentDtoConverter.convert(comment)).collect(Collectors.toSet());
         }
-        return new PostDto(post.getId(),post.getContent(),commentDtoSet);
+        return new PostDto(post.getId(),post.getTitle(),post.getContent(),commentDtoSet);
     }
 }

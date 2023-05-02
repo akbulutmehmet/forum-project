@@ -12,6 +12,8 @@ public class Post implements Serializable {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+    @Column(name = "title",nullable = false)
+    private String title;
     @Column(name = "content",nullable = false)
     private String content;
     @ManyToOne
@@ -25,11 +27,20 @@ public class Post implements Serializable {
     public Post() {
     }
 
-    public Post(String id, String content, Category category, Set<Comment> commentSet) {
+    public Post(String id, String title, String content, Category category, Set<Comment> commentSet) {
         this.id = id;
+        this.title = title;
         this.content = content;
         this.category = category;
         this.commentSet = commentSet;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

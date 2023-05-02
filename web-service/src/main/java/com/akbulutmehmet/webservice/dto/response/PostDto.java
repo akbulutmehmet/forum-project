@@ -6,8 +6,10 @@ import java.util.Set;
 
 public class PostDto implements Serializable {
     private String id;
+    private String title;
     private String content;
     private Set<CommentDto> comments;
+
 
     public PostDto() {
     }
@@ -17,10 +19,19 @@ public class PostDto implements Serializable {
         this.content = content;
     }
 
-    public PostDto(String id, String content, Set<CommentDto> comments) {
+    public PostDto(String id, String title, String content, Set<CommentDto> comments) {
         this.id = id;
+        this.title = title;
         this.content = content;
         this.comments = comments;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getId() {
