@@ -4,7 +4,7 @@ import categoryService from "../services/CategoryService";
 import Footer from "./footer";
 import Header from "./header";
 import Post from "./post";
-
+import { Link } from "react-router-dom";
 const CategoryDetail = () => {
   const { categoryId } = useParams();
   const [category, setCategory] = useState({});
@@ -25,6 +25,11 @@ const CategoryDetail = () => {
           <div className="col-md-12 text-center border border-black mt-5 mb-5 pt-5 pb-5">
             <h1 className="display-1">{category.title}</h1>
             <p className="text-lead">{category.description}</p>
+          </div>
+          <div className="row">
+            <div className="col-md-4" >
+            <Link className="btn btn-lg btn-success" to={"/new-post/" + categoryId} >Create Post</Link>
+            </div>
           </div>
           {posts.map((post, key) => (
             <Post key={key} title={post.title} id={post.id} />

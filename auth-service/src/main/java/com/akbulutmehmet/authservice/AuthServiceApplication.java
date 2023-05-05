@@ -9,21 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 
 @SpringBootApplication
-public class AuthServiceApplication implements ApplicationRunner {
-    private final UserService userService;
-
-
-    public AuthServiceApplication(UserService userService) {
-        this.userService = userService;
-    }
-
+public class AuthServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthServiceApplication.class, args);
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-
-
     }
 }

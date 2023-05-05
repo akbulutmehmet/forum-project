@@ -1,11 +1,13 @@
 package com.akbulutmehmet.profileservice.exception;
 
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -28,5 +30,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
             errors.put(fieldName, message);
         });
         return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ProfileException.class)
+    public ResponseEntity<?> userExceptionHandler (ProfileException profileException){
+        return new ResponseEntity<>(profileException.getMessage(),HttpStatus.NOT_FOUND);
     }
 }

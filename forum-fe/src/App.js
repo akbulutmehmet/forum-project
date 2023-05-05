@@ -7,6 +7,7 @@ import NewCategory from "./pages/new-category";
 import CategoryDetail from "./components/categoryDetail";
 import PostDetail from "./components/postDetail";
 import { useEffect, useState } from "react";
+import Newpost from "./pages/new-post";
 function App() {
   const [isAuth,setAuth] = useState(false);
   useEffect(() => {
@@ -15,7 +16,6 @@ function App() {
   },[])
   return (
     <>
-    {}
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -25,6 +25,7 @@ function App() {
       <Route path="/new-category" element={isAuth ? <NewCategory /> : <Login />} />
       <Route path="/category/:categoryId" element={isAuth ? <CategoryDetail /> : <Login />} />
       <Route path="/post/:postId" element={isAuth ? <PostDetail /> : <Login />} />
+      <Route path="/new-post/:categoryId" element={isAuth ? <Newpost />: <Login />}  />
     </Routes>
     </>
   );

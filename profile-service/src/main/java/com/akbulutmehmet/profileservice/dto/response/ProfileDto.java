@@ -1,37 +1,19 @@
-package com.akbulutmehmet.profileservice.model;
+package com.akbulutmehmet.profileservice.dto.response;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity
-public class Profile implements Serializable {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+public class ProfileDto implements Serializable {
     private String id;
-
-    @Column(name = "user_id",nullable = false,unique = true)
     private String userId;
-
-    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
     private String surname;
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "country")
     private String country;
 
-    public Profile() {
+    public ProfileDto() {
     }
 
-    public Profile(String id, String userId, String name, String surname, String city, String country) {
+    public ProfileDto(String id, String userId, String name, String surname, String city, String country) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -40,20 +22,20 @@ public class Profile implements Serializable {
         this.country = country;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

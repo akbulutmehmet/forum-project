@@ -1,26 +1,66 @@
 version: '3'
 services:
-  auth-db:
-    image: mysql:latest
+  db:
+    container_name: db
+    build:
+      dockerfile: Dockerfiledb
     ports:
-      - 3307:3306
+      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: authdb
-      MYSQL_USER: authuser
-      MYSQL_PASSWORD: authpass
-    volumes:
-      - auth-db-data:/var/lib/mysql
+      MYSQL_ROOT_PASSWORD: 123456
+    restart: always
+    networks:
+      - forum-network
   auth-service:
+    container_name: auth-service
     build: ./auth-service
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://auth-db:3307/authdb
-      SPRING_DATASOURCE_USERNAME: authuser
-      SPRING_DATASOURCE_PASSWORD: authpass
-    volumes:
-      - auth-service-data:/app
-volumes:
-  auth-db-data:
-  auth-service-data:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/authservice
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      WEB_SERVICE_URL: web-service:8083/api/v1/web
+      PROFILE_SERVICE_URL: profile-service:8082/api/v1/profile
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db:authservice
+    networks:
+      - forum-network
+  profile-service:
+    container_name: profile-service
+    build: ./profile-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/profileservice
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db:profileservice
+    networks:
+      - forum-network
+  web-service:
+    container_name: web-service
+    build: ./web-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/webservice
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      AUTH_SERVICE_URL: auth-service:8081/api/v1/user
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db:webservice
+    networks:
+      - forum-network
+networks:
+  forum-network:
