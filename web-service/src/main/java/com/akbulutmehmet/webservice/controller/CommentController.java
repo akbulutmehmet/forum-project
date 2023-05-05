@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/comment")
@@ -26,7 +27,10 @@ public class CommentController {
     public ResponseEntity<CommentDto> updateComment (@Valid @RequestBody UpdateCommentRequest updateCommentRequest){
         return ResponseEntity.ok(commentService.updateComment(updateCommentRequest));
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<List<CommentDto>>  getCommentsByPostId (@PathVariable("id") String postId) {
+        return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
+    }
     @DeleteMapping(value = "deleteComment/{id}")
     public void deleteComment(@PathVariable("id") String id){
         commentService.deleteComment(id);

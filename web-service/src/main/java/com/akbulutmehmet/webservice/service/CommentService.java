@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(propagation = Propagation.REQUIRED,readOnly = true)
 public class CommentService {
@@ -46,5 +50,11 @@ public class CommentService {
     @Transactional(readOnly = false)
     public void deleteComment(String id) {
         commentRepository.deleteById(id);
+    }
+
+    public List<CommentDto> getCommentsByPostId(String postId) {
+        return  postService.findById(postId).getCommentSet().stream().map((comment) -> {
+            return commentDtoConverter.convert(comment);
+        }).collect(Collectors.toList());
     }
 }
