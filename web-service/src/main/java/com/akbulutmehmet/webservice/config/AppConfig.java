@@ -1,6 +1,7 @@
 package com.akbulutmehmet.webservice.config;
 
 import com.akbulutmehmet.webservice.interceptor.AuthInterceptor;
+import com.akbulutmehmet.webservice.interceptor.LogInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -22,5 +23,6 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
+        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
     }
 }

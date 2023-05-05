@@ -10,7 +10,7 @@ const PostDetail = () => {
     useEffect(() => {
         postService.getPostById("/api3/api/v1/post/",postId,(response) => {
             setPost(response.data);
-        })
+        });
     },[postId]);
     return (<>
     <Header />
