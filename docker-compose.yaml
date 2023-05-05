@@ -11,6 +11,18 @@ services:
     restart: always
     networks:
       - forum-network
+  eureka:
+    container_name: eureka
+    build: ./eureka-server
+    environment:
+      EUREKA_URI: http://eureka:8761/eureka/
+    ports:
+      - "8761:8761"
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - forum-network
   auth-service:
     container_name: auth-service
     build: ./auth-service
@@ -20,10 +32,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/authservice
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
-      WEB_SERVICE_URL: web-service:8083/api/v1/web
-      PROFILE_SERVICE_URL: profile-service:8082/api/v1/profile
+      EUREKA_URI: http://eureka:8761/eureka/
     depends_on:
-      - db
+      - eureka
     restart: always
     links:
       - db:authservice
@@ -38,8 +49,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/profileservice
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
+      EUREKA_URI: http://eureka:8761/eureka/
     depends_on:
-      - db
+      - eureka
     restart: always
     links:
       - db:profileservice
@@ -54,10 +66,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/webservice
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
-      AUTH_SERVICE_URL: auth-service:8081/api/v1/user
+      EUREKA_URI: http://eureka:8761/eureka/
     depends_on:
-      - db
-    restart: always
+      - eureka
     links:
       - db:webservice
     networks:

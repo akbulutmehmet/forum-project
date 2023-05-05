@@ -31,8 +31,15 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         });
         return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(ProfileException.class)
     public ResponseEntity<?> userExceptionHandler (ProfileException profileException){
         return new ResponseEntity<>(profileException.getMessage(),HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<?> authException (AuthorizationException authorizationException) {
+        return new ResponseEntity<>(authorizationException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -3,7 +3,7 @@ package com.akbulutmehmet.authservice.manager;
 import org.springframework.cloud.openfeign.FeignClient;
 
 
-@FeignClient(url = "${web.service.url}", name = "webFeignClient", decode404 = true)
+@FeignClient(name = "web-service", path = "api/v1/")
 public interface IWebManager {
 
 }
