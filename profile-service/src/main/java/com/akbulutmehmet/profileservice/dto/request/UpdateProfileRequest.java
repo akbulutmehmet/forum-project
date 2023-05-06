@@ -5,9 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class UpdateProfileRequest implements Serializable {
-    @NotBlank(message = "Userid field should not be blank")
-    @NotEmpty(message = "Userid field should not be empty")
-    private String userId;
     @NotBlank(message = "Name field should not be blank")
     @NotEmpty(message = "Name field should not be empty")
     private String name;
@@ -24,20 +21,11 @@ public class UpdateProfileRequest implements Serializable {
     public UpdateProfileRequest() {
     }
 
-    public UpdateProfileRequest(String userId, String name, String surname, String city, String country) {
-        this.userId = userId;
+    public UpdateProfileRequest(String name, String surname, String city, String country) {
         this.name = name;
         this.surname = surname;
         this.city = city;
         this.country = country;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getSurname() {

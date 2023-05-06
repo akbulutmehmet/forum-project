@@ -1,6 +1,7 @@
 package com.akbulutmehmet.authservice.service;
 
 import com.akbulutmehmet.authservice.dto.converter.UserDtoConverter;
+import com.akbulutmehmet.authservice.dto.request.CreateProfileRequest;
 import com.akbulutmehmet.authservice.dto.request.CreateUserRequest;
 import com.akbulutmehmet.authservice.dto.request.LoginRequest;
 import com.akbulutmehmet.authservice.dto.request.TokenRequest;
@@ -14,15 +15,12 @@ import com.akbulutmehmet.authservice.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,13 +31,14 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    private final IProfileManager profileManager;
+    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, IProfileManager profileManager) {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.profileManager = profileManager;
     }
 
     @Transactional(readOnly = false)
@@ -50,8 +49,9 @@ public class UserService {
         user.setUsername(createUserRequest.getUsername());
         user.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
         user.setRole(Role.USER);
-        userRepository.save(user);
-        return new TokenDto(jwtService.generateToken(user));
+        User newUser = userRepository.save(user);
+        profileManager.createProfile(new CreateProfileRequest(newUser.getId(), newUser.getName(), newUser.getSurName()));
+        return new TokenDto(jwtService.generateToken(newUser));
     }
 
     public TokenDto userLogin(LoginRequest loginRequest) {

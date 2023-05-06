@@ -1,6 +1,7 @@
 package com.akbulutmehmet.profileservice.controller;
 
 import com.akbulutmehmet.profileservice.dto.request.CreateProfileRequest;
+import com.akbulutmehmet.profileservice.dto.request.UpdateProfileRequest;
 import com.akbulutmehmet.profileservice.dto.response.ProfileDto;
 import com.akbulutmehmet.profileservice.service.ProfileService;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,10 @@ public class ProfileController {
     public ResponseEntity<ProfileDto> getByUserId (@PathVariable("userId") String userId) {
         return ResponseEntity.ok(profileService.getByUserId(userId));
     }
-
+    @PostMapping("/updateProfile/${userId}")
+    public ResponseEntity<ProfileDto> updateProfileByUserId (@PathVariable("userId") String userId,@Valid @RequestBody UpdateProfileRequest updateProfileRequest){
+        return ResponseEntity.ok(profileService.updateProfile(userId,updateProfileRequest));
+    }
 
     @PostMapping(value = "/createProfile")
     public ResponseEntity<ProfileDto> createProfile (@Valid @RequestBody CreateProfileRequest createProfileRequest){
