@@ -12,12 +12,24 @@ public class CreateCommentRequest implements Serializable {
     @NotEmpty(message =  "postId field should not be emty")
     private String postId;
 
+    @NotBlank(message = "userId field should not be blank")
+    @NotEmpty(message = "userId field should not be blank")
+    private String userId;
     public CreateCommentRequest() {
     }
 
-    public CreateCommentRequest(String content, String postId) {
+    public CreateCommentRequest(String content, String postId, String userId) {
         this.content = content;
         this.postId = postId;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContent() {

@@ -35,6 +35,7 @@ public class CommentService {
         Comment comment = new Comment();
         comment.setContent(createCommentRequest.getContent());
         comment.setPost(post);
+        comment.setUserId(createCommentRequest.getUserId());
         return commentDtoConverter.convert(commentRepository.save(comment));
     }
 

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import commentService from "../services/CommentService";
 
-const CreateComment = ({postId,callback}) => {
+const CreateComment = ({postId,callback,userId}) => {
     const [comment,setComment] = useState({});
     useEffect(() => {
         setComment({
-            "postId":postId
+            "postId":postId,
+            "userId":userId
         })
-    },[postId]);
+    },[postId,userId]);
     const onChangeContent = (event) => {
         setComment({
             ...comment,
@@ -22,12 +23,13 @@ const CreateComment = ({postId,callback}) => {
         })
     }
     return (<>
-         <div className="row">
-            <div className="col-md-12 text-center border border-black p-2 m-5">
-                <textarea className="form-control" rows={"10"} onChange={onChangeContent} >
+         <div className="row mt-5">
+            <div className="form-outline col-md-12 text-left border border-black">
+                <h4 className="display-4">Create Comment</h4>
+                <textarea className="form-control mt-2" rows={"10"} onChange={onChangeContent} >
                     
                 </textarea>
-                <button onClick={onClickbtn} className="btn btn-lg btn-success mt-3" >CREATE COMMENT</button>
+                <button onClick={onClickbtn} className="btn btn-lg btn-success mt-2 mb-2" >CREATE COMMENT</button>
             </div>
         </div>
     </>);

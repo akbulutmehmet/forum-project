@@ -27,6 +27,13 @@ const CategoryDetail = () => {
             <h1 className="display-1">{category.title}</h1>
             <p className="text-lead">{category.description}</p>
           </div>
+          <div className="col-md-3">
+          {(sessionStorage.getItem("userId") === category.userId ) ? 
+            <button className="btn btn-lg btn-primary"
+            
+            >UPDATE</button>
+            : ""  }
+          </div>
           <Author userId={category.userId} />
           <div className="row">
             <div className="col-md-4" >

@@ -7,37 +7,41 @@ import commentService from "../services/CommentService";
 import Comment from "./comment";
 import CreateComment from "./createComment";
 import Author from "./author";
-const PostDetail = () => {
+const PostDetail = ({GlobalState}) => {
     const {postId} = useParams();
     const [post,setPost] = useState({});
     const [comments,setComments] = useState([]);
+    const {userId} = GlobalState;
     useEffect(() => {
         postService.getPostById("/api3/api/v1/post/",postId,(response) => {
             setPost(response.data);
         });
-    },[postId]);
-    useEffect(() => {
         commentService.getCommentsByPostId("/api3/api/v1/comment/",postId,(response) => {
             setComments(response.data);
         });
-    },[postId])
+    },[postId]);
 
     
     return (<>
     <Header />
         <div className="container">
-            <div className="col-md-12 text-center border border-black p-2 m-5">
+            <div className="col-md-12 text-center border border-black p-2 mt-5 mb-5">
                 <h1 className="display-1 text-uppercase">{post.title}</h1>
                 <p className="text-lead">{post.content}</p>
             </div>
-            <div className="col-md-12 text-left border border-black p-2 m-5" >
+            <Author userId={post.userId} />
+            {(sessionStorage.getItem("userId") === post.userId ) ? 
+            <button className="btn btn-lg btn-primary">UPDATE</button>
+            : ""  }
+            <div className="col-md-12 text-left border border-black p-2 mt-5 mb-5" >
                 <h1 className="display-1 text-uppercase">COMMENTS</h1>
             </div>
-            <Author userId={post.userId} />
+            
+           
             {comments.map((comment,key) => {
-            return <Comment key={key} id={comment.id} content={comment.content} />;
+            return <Comment key={key} id={comment.id} content={comment.content} userId={comment.userId}/>;
         })}
-            <CreateComment postId={postId} callback={(response) => {
+            <CreateComment userId={userId} postId={postId} callback={(response) => {
                 setComments([...comments,response.data]);
             }}/>
         </div>

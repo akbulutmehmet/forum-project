@@ -5,13 +5,22 @@ import java.io.Serializable;
 public class CommentDto implements Serializable {
     private String id;
     private String content;
-
+    private String userId;
     public CommentDto() {
     }
 
-    public CommentDto(String id, String content) {
+    public CommentDto(String id, String content, String userId) {
         this.id = id;
         this.content = content;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getId() {

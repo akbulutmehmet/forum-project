@@ -18,15 +18,25 @@ public class Comment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
+    @Column(name = "user_id",nullable = false)
+    private String userId;
 
     public Comment() {
     }
 
-    public Comment(String id, String content, Post post) {
+    public Comment(String id, String content, Post post, String userId) {
         this.id = id;
         this.content = content;
         this.post = post;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getId() {

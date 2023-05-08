@@ -31,7 +31,7 @@ function App() {
       <Route path="/categories" element={isAuth ? <Categories /> : <Login />} />
       <Route path="/new-category"  element={isAuth ? <NewCategory GlobalState={GlobalState}/> : <Login />} />
       <Route path="/category/:categoryId" element={isAuth ? <CategoryDetail /> : <Login />} />
-      <Route path="/post/:postId" element={isAuth ? <PostDetail  /> : <Login />} />
+      <Route path="/post/:postId" element={isAuth ? <PostDetail  GlobalState={GlobalState}/> : <Login />} />
       <Route path="/new-post/:categoryId" element={isAuth ? <Newpost GlobalState={GlobalState}  />: <Login />}  />
       <Route path="/profile" element={isAuth ? <Profile GlobalState={GlobalState} />: <Login />} />
     </Routes>
