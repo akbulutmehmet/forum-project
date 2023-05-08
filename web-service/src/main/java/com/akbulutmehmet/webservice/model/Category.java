@@ -16,6 +16,8 @@ public class Category implements Serializable {
     private String title;
     @Column(name = "description",nullable = false)
     private String description;
+    @Column(name = "user_id",nullable = false)
+    private String userId;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Post> posts;
@@ -24,11 +26,20 @@ public class Category implements Serializable {
     public Category() {
     }
 
-    public Category(String id, String title, String description, Set<Post> posts) {
+    public Category(String id, String title, String description, String userId, Set<Post> posts) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.userId = userId;
         this.posts = posts;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getId() {

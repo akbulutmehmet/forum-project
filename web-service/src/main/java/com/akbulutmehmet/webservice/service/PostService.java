@@ -31,6 +31,7 @@ public class PostService {
         post.setCategory(category);
         post.setContent(createPostRequest.getContent());
         post.setTitle(createPostRequest.getTitle());
+        post.setUserId(createPostRequest.getUserId());
         return postDtoConverter.convert(postRepository.save(post));
     }
 

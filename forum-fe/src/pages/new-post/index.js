@@ -3,7 +3,8 @@ import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import postService from "../../services/PostService";
-const Newpost = () =>  {
+const Newpost = ({GlobalState}) =>  {
+    const {userId} = GlobalState;
     const [post,setPost] = useState({});
     const navigate = useNavigate();
     const onChangeTitle = (event) => {
@@ -28,9 +29,10 @@ const Newpost = () =>  {
     const {categoryId} = useParams();
     useEffect(() => {
         setPost({
-            "categoryId":categoryId
+            "categoryId":categoryId,
+            "userId":userId
         });
-    },[categoryId]);
+    },[categoryId,userId]);
     return (<> 
         <Header />
         <div className="container mt-5 mb-5 pt-1 pb-1 ">

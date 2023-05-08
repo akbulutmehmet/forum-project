@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-@FeignClient(name = "auth-service",decode404 = true)
+@FeignClient(name = "auth-service", path = "/api/v1/user")
 public interface IAuthManager {
     @PostMapping(value = "/tokenControl")
     Boolean tokenControl (@Valid @RequestBody TokenRequest tokenRequest);

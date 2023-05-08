@@ -1,11 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Navmenu = () => {
+    const navigate = useNavigate();
     const onClickBtn = () => {
-      sessionStorage.setItem("token",null);
-      window.location.href = "/login";
+      sessionStorage.clear();
+      navigate("/login");
     }
     return (
         <>

@@ -18,6 +18,6 @@ public class CategoryDtoConverter {
 
     public CategoryDto convert(Category category) {
         Set<PostDto> postDtoSet = category.getPosts().stream().map((post) -> postDtoConverter.convert(post)).collect(Collectors.toSet());
-        return new CategoryDto(category.getId(),category.getTitle(), category.getDescription(), postDtoSet);
+        return new CategoryDto(category.getId(),category.getTitle(), category.getDescription(),category.getUserId(), postDtoSet);
     }
 }

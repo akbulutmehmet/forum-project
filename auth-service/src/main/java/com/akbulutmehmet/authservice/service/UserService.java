@@ -51,7 +51,7 @@ public class UserService {
         user.setRole(Role.USER);
         User newUser = userRepository.save(user);
         profileManager.createProfile(new CreateProfileRequest(newUser.getId(), newUser.getName(), newUser.getSurName()));
-        return new TokenDto(jwtService.generateToken(newUser));
+        return new TokenDto(jwtService.generateToken(newUser),newUser.getId());
     }
 
     public TokenDto userLogin(LoginRequest loginRequest) {
@@ -61,7 +61,7 @@ public class UserService {
         User user = userRepository.
                 findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return new TokenDto(jwtService.generateToken(user));
+        return new TokenDto(jwtService.generateToken(user),user.getId());
     }
     public List<UserDto> listUser () {
         return userRepository.findAll().stream().map((user) -> userDtoConverter.convert(user)).collect(Collectors.toList());

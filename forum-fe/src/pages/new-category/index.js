@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import categoryService from "../../services/CategoryService";
-const NewCategory = () => {
+const NewCategory = ({GlobalState}) => {
     const [category,setCategory] = useState({});
+    const {userId} = GlobalState;
     const onChangeTitle = (event) => {
         setCategory({
             ...category,
@@ -16,6 +17,12 @@ const NewCategory = () => {
             description:event.target.value
         });
     };
+    useEffect(() => {
+        setCategory({
+            ...category,
+            "userId":userId
+        });
+    },[])
     const onClickBtn = () => {
         categoryService.createCategory("/api3/api/v1/category/createCategory",JSON.stringify(category),(response) =>{
             if(response.status === 200) {

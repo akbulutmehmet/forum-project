@@ -8,23 +8,13 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-    restart: always
-    networks:
-      - forum-network
   eureka:
-    container_name: eureka
     build: ./eureka-server
-    environment:
-      EUREKA_URI: http://eureka:8761/eureka/
-    ports:
-      - "8761:8761"
-    restart: always
-    depends_on:
-      - db
+    expose:
+      - "8761"
     networks:
       - forum-network
   auth-service:
-    container_name: auth-service
     build: ./auth-service
     ports:
       - "8081:8081"
@@ -34,10 +24,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
       EUREKA_URI: http://eureka:8761/eureka/
     depends_on:
-      - eureka
-    restart: always
-    links:
-      - db:authservice
+      - db
     networks:
       - forum-network
   profile-service:
@@ -49,12 +36,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/profileservice
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
-      EUREKA_URI: http://eureka:8761/eureka/
+      EUREKA_URI: http://eureka:8761/eureka
     depends_on:
-      - eureka
+      - db
     restart: always
-    links:
-      - db:profileservice
     networks:
       - forum-network
   web-service:
@@ -66,12 +51,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/webservice
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
-      EUREKA_URI: http://eureka:8761/eureka/
+      EUREKA_URI: http://eureka:8761/eureka
     depends_on:
-      - eureka
-    links:
-      - db:webservice
+      - db
     networks:
       - forum-network
 networks:
   forum-network:
+    driver: bridge

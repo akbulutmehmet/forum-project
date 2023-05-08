@@ -20,7 +20,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
+        registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/api/v1/profile/createProfile");
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
     }
 }

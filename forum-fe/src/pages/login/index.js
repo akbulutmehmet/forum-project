@@ -20,6 +20,7 @@ const Login = () => {
     const btnOnClick = () => {
         loginService.login("/api1/api/v1/user/login",JSON.stringify(user),(response) => {
             sessionStorage.setItem("token",response.data.token); 
+            sessionStorage.setItem("userId",response.data.userId);
             setTimeout(() => {
                 window.location.href = "/"
             },2000);

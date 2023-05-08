@@ -16,6 +16,8 @@ public class Post implements Serializable {
     private String title;
     @Column(name = "content",nullable = false)
     private String content;
+    @Column(name = "user_id",nullable = false)
+    private String userId;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -27,12 +29,21 @@ public class Post implements Serializable {
     public Post() {
     }
 
-    public Post(String id, String title, String content, Category category, Set<Comment> commentSet) {
+    public Post(String id, String title, String content, String userId, Category category, Set<Comment> commentSet) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.userId = userId;
         this.category = category;
         this.commentSet = commentSet;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {

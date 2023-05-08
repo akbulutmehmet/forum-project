@@ -5,6 +5,7 @@ import Footer from "./footer";
 import Header from "./header";
 import Post from "./post";
 import { Link } from "react-router-dom";
+import Author from "./author";
 const CategoryDetail = () => {
   const { categoryId } = useParams();
   const [category, setCategory] = useState({});
@@ -26,6 +27,7 @@ const CategoryDetail = () => {
             <h1 className="display-1">{category.title}</h1>
             <p className="text-lead">{category.description}</p>
           </div>
+          <Author userId={category.userId} />
           <div className="row">
             <div className="col-md-4" >
             <Link className="btn btn-lg btn-success" to={"/new-post/" + categoryId} >Create Post</Link>

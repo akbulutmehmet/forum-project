@@ -30,6 +30,7 @@ const Register = () => {
     const btnOnClick = () => {
         loginService.register("/api1/api/v1/user/register",JSON.stringify(user),(res) => {
             sessionStorage.setItem("token",res.data.token);
+            sessionStorage.setItem("userId",res.data.userId);
             setTimeout(() => {
                 window.location.href = "/"
             },2000);

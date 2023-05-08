@@ -9,16 +9,26 @@ public class CategoryDto implements Serializable {
     private String id;
     private String title;
     private String description;
+    private String userId;
     private Set<PostDto> posts;
 
     public CategoryDto() {
     }
 
-    public CategoryDto(String id, String title, String description, Set<PostDto> posts) {
+    public CategoryDto(String id, String title, String description, String userId, Set<PostDto> posts) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.userId = userId;
         this.posts = posts;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getId() {

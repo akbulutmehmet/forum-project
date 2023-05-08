@@ -6,6 +6,7 @@ import Footer from "./footer";
 import commentService from "../services/CommentService";
 import Comment from "./comment";
 import CreateComment from "./createComment";
+import Author from "./author";
 const PostDetail = () => {
     const {postId} = useParams();
     const [post,setPost] = useState({});
@@ -32,6 +33,7 @@ const PostDetail = () => {
             <div className="col-md-12 text-left border border-black p-2 m-5" >
                 <h1 className="display-1 text-uppercase">COMMENTS</h1>
             </div>
+            <Author userId={post.userId} />
             {comments.map((comment,key) => {
             return <Comment key={key} id={comment.id} content={comment.content} />;
         })}
